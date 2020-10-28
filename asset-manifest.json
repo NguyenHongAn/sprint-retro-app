@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/sprint-retro-app/static/css/main.035a9eb8.chunk.css",
+    "main.js": "/sprint-retro-app/static/js/main.5e1d3984.chunk.js",
+    "main.js.map": "/sprint-retro-app/static/js/main.5e1d3984.chunk.js.map",
+    "runtime-main.js": "/sprint-retro-app/static/js/runtime-main.d0931917.js",
+    "runtime-main.js.map": "/sprint-retro-app/static/js/runtime-main.d0931917.js.map",
+    "static/css/2.20aa2d7b.chunk.css": "/sprint-retro-app/static/css/2.20aa2d7b.chunk.css",
+    "static/js/2.e9753a93.chunk.js": "/sprint-retro-app/static/js/2.e9753a93.chunk.js",
+    "static/js/2.e9753a93.chunk.js.map": "/sprint-retro-app/static/js/2.e9753a93.chunk.js.map",
+    "static/js/3.ccf6f878.chunk.js": "/sprint-retro-app/static/js/3.ccf6f878.chunk.js",
+    "static/js/3.ccf6f878.chunk.js.map": "/sprint-retro-app/static/js/3.ccf6f878.chunk.js.map",
+    "index.html": "/sprint-retro-app/index.html",
+    "static/css/2.20aa2d7b.chunk.css.map": "/sprint-retro-app/static/css/2.20aa2d7b.chunk.css.map",
+    "static/css/main.035a9eb8.chunk.css.map": "/sprint-retro-app/static/css/main.035a9eb8.chunk.css.map",
+    "static/js/2.e9753a93.chunk.js.LICENSE.txt": "/sprint-retro-app/static/js/2.e9753a93.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d0931917.js",
+    "static/css/2.20aa2d7b.chunk.css",
+    "static/js/2.e9753a93.chunk.js",
+    "static/css/main.035a9eb8.chunk.css",
+    "static/js/main.5e1d3984.chunk.js"
+  ]
+}
