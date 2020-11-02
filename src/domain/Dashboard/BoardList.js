@@ -2,6 +2,7 @@ import React from 'react'
 import './dashboard.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle,faClock,faCopy,faClone } from '@fortawesome/free-solid-svg-icons';
+import {Link} from 'react-router-dom'; 
 
 export default function BoardList({boardList}) {
 
@@ -27,14 +28,14 @@ export default function BoardList({boardList}) {
                                 </span>
                                 <ul></ul>
                                 <div className="board-actions">
-                                    <a href="#">
+                                    <Link to="#">
                                         <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon>
                                          URL 
-                                    </a>
-                                    <a href="#">
+                                    </Link>
+                                    <Link to="#">
                                         <FontAwesomeIcon icon={faClone}></FontAwesomeIcon>
                                         Clone
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </li>
