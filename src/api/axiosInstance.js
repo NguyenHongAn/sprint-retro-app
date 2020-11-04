@@ -1,0 +1,18 @@
+const axios = require('axios');
+
+const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_ENV === "develop"? process.env.REACT_APP_DEV_SITE: process.env.REACT_APP_PRODUCT_SITE,
+    timeout: 10000,
+    headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE",
+        "Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept, Authorization",
+
+    }
+  });
+
+
+module.exports =  axiosInstance;
+
+
+

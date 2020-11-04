@@ -1,14 +1,16 @@
 import React, {useState} from 'react'
-import {Navbar,NavItem,NavLink,Collapse,NavbarBrand,Nav, NavbarToggler } from 'reactstrap';
+import {Navbar,NavItem,NavLink,Collapse,NavbarBrand,Nav, NavbarToggler,Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 export default function AppNavBar({isTransparent}) {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [isSignin, setIsSignin]  = useState(false);
+    const [isSignin, setIsSignin]  = useState(true);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
-
+    const dropDown = () => setDropdownOpen(!dropdownOpen);
     const boardStyle = {
         backgroundColor: '#1e88e5', 
     }
@@ -21,17 +23,6 @@ export default function AppNavBar({isTransparent}) {
         fontFamily: 'thirsty_script_extrabold_deRg',
     }
 
-    const setStyle = () =>
-    {
-        if (isTransparent)
-        {
-            return boardStyle;
-        }
-        else{
-            return transparentStyle;
-        }
-        
-    }
     return (
     <div>
         <Navbar style={isTransparent? transparentStyle:boardStyle} className="text-light text-uppercase" fixed="top" light expand="md">
@@ -42,17 +33,27 @@ export default function AppNavBar({isTransparent}) {
                 {isTransparent? null :(isSignin?
                     <Nav className="ml-auto" navbar>
                         <NavItem active>
-                            <NavLink className="text-light" href="/profile">
+                        <Dropdown isOpen={dropdownOpen} toggle={dropDown}>
+                            <DropdownToggle className="nav-link" style={transparentStyle}>
                                 <FontAwesomeIcon icon={faUserCircle} size="lg"></FontAwesomeIcon>
-                            </NavLink>
-                        </NavItem>
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem>
+                                    <Link to="/profile" className="text-decoration-none"> Profile</Link>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <Link to="/auth/signout" className="text-decoration-none"> Sign Out</Link>
+                                </DropdownItem>
+                            </DropdownMenu>        
+                            </Dropdown>
+                        </NavItem>           
                     </Nav>
                     :<Nav className="ml-auto" navbar>
                     <NavItem active>
-                        <NavLink className="text-light" href="/user/signin">Sign In</NavLink>
+                        <NavLink className="text-light" href="/auth/signin">Sign In</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink className="text-light" href="/user/signup">Sign Up</NavLink>
+                        <NavLink className="text-light" href="/auth/signup">Sign Up</NavLink>
                     </NavItem>
                 </Nav>)}
                 

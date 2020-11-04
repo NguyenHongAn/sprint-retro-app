@@ -1,24 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import React from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import './domain/Dashboard/dashboard.css';
 
 import HomePage from './domain/Home/HomePage';
-import UserPage from './domain/User/UserPage';
+import UserPage from './domain/Auth/UserPage';
 import ProfilePage from './domain/Profile/ProfilePage';
-import Dashboard from './domain/Dashboard/Dashboard';
+import DashboardPage from './domain/Dashboard/DashboardPage';
+import ColumnsModal from './domain/Dashboard/ColumnsPage';
 function App() {
-  const [boardList, setBoardList] = useState([]);
-
-  useEffect(()=>{
-    async function fetchData(){
-      const response = await fetch("http://localhost:8000");
-      const boardList=  await response.json();
-      console.log(boardList);
-      setBoardList(boardList.boards);
-    }
-    fetchData();
-  },[]);
+  
 
   return (
    
@@ -27,18 +18,24 @@ function App() {
         <HomePage></HomePage>
       </Route>
 
-      <Route path="/user/signin">
+      <Route path="/auth/signin">
         <UserPage option="signin"></UserPage>
       </Route>
-      <Route path="/user/signup">
+      <Route path="/auth/signup">
         <UserPage option="signup"></UserPage>
       </Route>
       <Route path="/profile">
         <ProfilePage></ProfilePage>
       </Route>
-      <Route path="/dashboard">
-          <Dashboard boardList={boardList}></Dashboard>
-      </Route>
+        <Switch>
+          <Route path="/dashboard/:sprintid">
+                    <ColumnsModal></ColumnsModal>
+          </Route>
+            <Route path="/dashboard">
+              <DashboardPage/>
+            </Route>
+        </Switch>
+     
     </Router>
   );
 }

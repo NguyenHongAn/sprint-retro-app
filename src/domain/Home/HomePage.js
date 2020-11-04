@@ -16,7 +16,7 @@ export default function HomePage() {
                 <Container className="heading">
                     Improve with Sprint Retrospectives 
                 <p className="lead">This is a description for the first slide.</p>
-                <Link className="btn-start" to="/user/signup"> Get Started for Free </Link>
+                <Link className="btn-start" to="/auth/signup"> Get Started for Free </Link>
                 </Container>
                 
                 </div>
