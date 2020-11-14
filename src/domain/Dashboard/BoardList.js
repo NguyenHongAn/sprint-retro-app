@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle,faClock,faCopy,faClone,faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import {Link, Redirect} from 'react-router-dom';  
+import {useHistory} from 'react-router-dom';  
 import {Button} from 'reactstrap';
 
 import './dashboard.css';
@@ -9,53 +9,94 @@ import './boardList.css';
 import CreateCardModal from './CreateCardModal';
 import axiosRequest from '../../api/axiosRequest';
 
-export default function BoardList({boardList, setBoardList}) {
+export default function BoardList() {
 
-    const [cardModal, setCardModal] = useState(false);
+    const [boardList, setBoardList] = useState([]);
+    const [isOpen, setisOpen] = useState(false);
     const [sprint, setSprint] = useState("");
-    const [redirect, setRedirect] = useState(false);
-    const toggle = () => setCardModal(!cardModal);
+    const history = useHistory();
+
+    const toggle = () => setisOpen(!isOpen);
+
+    useEffect(()=>{
+        async function fetchData(){
+          try
+          {
+            let response = await axiosRequest("GET", "/dashboard");
+            let data= response.data;
+            if (response.status=== 200)
+            {
+              data = data.boards.map(sprint =>{
+                  let d = new Date(sprint.createTime);   
+                  let formatted_date =  d.getDate() + '/' + (d.getMonth() + 1) +'/'+ d.getFullYear();
+                  sprint.createTime = formatted_date; 
+                  return sprint;
+              });
+              console.log(data);
+              setBoardList(data);
+            }
+          }
+          catch(error) {
+            history.push('/error');
+        }
+        }
+        fetchData();
+        },[history]);
+
 
     // open Dialog ==============================================
-    const openColumnModal = (sprintid) => 
+    const openColumnPage = (sprintid) => 
     {
-        setRedirect(!redirect);
         setSprint(sprintid);
         console.log(sprint);
+        history.push(`/dashboard/${sprintid}`);
     }
 
     // DELETE board ====================================================
     const deleteBoard = async (boardId) =>{
-        let result = await axiosRequest("DELETE", "/dashboard", boardId);
+        try {
+            const result = await axiosRequest("DELETE", "/dashboard", boardId);
 
-        if(result.status === 200)
-        {
-            console.log(result);
-            const newBoardList = boardList.filter(board => board._id !== boardId);
-            setBoardList(newBoardList);
-        }
-        else{
-            setRedirect(true);
+            if(result.status === 200)
+            {
+                console.log(result);
+                const newBoardList = boardList.filter(board => board._id !== boardId);
+                setBoardList(newBoardList);
+            }
+        } catch (error) {
+            history.push("/error");
         }
     }
 
     // handle add new board ============================================
-    const addNewBoard = (board) =>{
-        let d = new Date(board.createTime);   
-        let formatted_date =  d.getDate() + '/' + (d.getMonth() + 1) +'/'+ d.getFullYear();
-              
-        board.createTime = formatted_date; 
-        boardList.push(board);
-        const newBoardList = Array.from(boardList);
-        setBoardList(newBoardList);
+    const addNewBoard = async (board) =>{
+        try {
+            const response = await axiosRequest("POST",'/dashboard', board);
+            
+            if (response.status === 200)
+            {
+                let d = new Date(response.data.createTime);  
+                board = response.data; 
+                let formatted_date =  d.getDate() + '/' + (d.getMonth() + 1) +'/'+ d.getFullYear();
+                    
+                board.createTime = formatted_date; 
+                board.columns.length = 0;
+                boardList.push(board);
+                const newBoardList = Array.from(boardList);
+                setBoardList(newBoardList);
+            }
+
+        } catch (error) {
+            alert(error);
+        }
     }
+
     return (
         <div>
-        {redirect?
-        <Redirect to={`/dashboard/${sprint}`}></Redirect>
-        :(<div>
+        {(<div>
+            <CreateCardModal modal={isOpen} toggle={toggle} addNewBoard={addNewBoard}></CreateCardModal>
             <ul>
-            <li className="dashboard-item add-item" onClick={()=>{toggle()}}>
+            <li className="dashboard-item add-item" onClick={toggle}>
                 <span className="add">
                 <FontAwesomeIcon icon={faPlusCircle} size="4x"/>
                 <small>Add board</small>
@@ -66,7 +107,7 @@ export default function BoardList({boardList, setBoardList}) {
                     return (
                         <li className='dashboard-item' key={board._id}>
                             <div className="dashboard-item-body">
-                                <div onClick={() => openColumnModal(board._id)}>
+                                <div onClick={() => openColumnPage(board._id)}>
                                 <p>{board.title}</p>
                                 <div className="date-and-number">
                                     <span className="board-date">
@@ -96,7 +137,7 @@ export default function BoardList({boardList, setBoardList}) {
                 })
             }
         </ul>
-            <CreateCardModal modal={cardModal} toggle={toggle} add={addNewBoard} ></CreateCardModal>
+           
         </div>)
         }
         </div>

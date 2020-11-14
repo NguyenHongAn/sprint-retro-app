@@ -4,7 +4,7 @@ const axiosRequest = async (method,url, object) =>{
         let response;
         if (method === "GET")
         {
-            response = await axiosInstance.get(url);
+            response = await axiosInstance.get(url, object);
         }
         else  if (method === "POST")
         {

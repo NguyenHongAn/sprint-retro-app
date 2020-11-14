@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Container, Row,Col, FormGroup,Form, Label, Input, Button} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import './profile.css';
-import AppNavBar from '../../components/AppNavBar';
+
 
 export default function ProfilePage() {
     const [changePass, setChangePass] = useState(false);
@@ -14,7 +14,6 @@ export default function ProfilePage() {
     }
     return (
         <div>
-        <AppNavBar></AppNavBar>
        
         <Container >
             <h2 className="text-center">Thông tin tài khoản</h2>
@@ -26,17 +25,17 @@ export default function ProfilePage() {
                     <Form method="POST" action="/profile">
                         <FormGroup>
                             <Label className="control-label" for="fullname">Fullname</Label>
-                            <Input type="text" name="fullname" className="form-control" id="fullname"
+                            <Input type="text" name="fullname"  id="fullname"
                                 value="{{infor.fullname}}" placeholder="Fullname"/>                               
                         </FormGroup>
                         <FormGroup>
                             <Label className="control-label" for="username">Username</Label>
-                            <Input type="text" name="username" className="form-control" id="username"
+                            <Input type="text" name="username"  id="username"
                                 value="userName" placeholder="Username"></Input>
                         </FormGroup>
                         <FormGroup>
                             <Label className="control-label" for="email">Email</Label>
-                            <Input type="email" name="email" className="form-control" id="email"
+                            <Input type="email" name="email" id="email"
                                 value="Email" placeholder="Email"></Input>
                         </FormGroup>
                         <hr/>
@@ -50,12 +49,12 @@ export default function ProfilePage() {
                             <FormGroup>
                                 <FormGroup>
                                     <Label className="control-label" for="new-password">New password </Label>
-                                    <Input type="password" name="new_password" class="form-control" id="new_password"
+                                    <Input type="password" name="new_password" id="new_password"
                                          value="" autocomplete="off" placeholder="New password"></Input>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label className="control-label" for="renew-password">New password </Label>
-                                    <Input type="password" name="renew_password" class="form-control" id="renew_password"
+                                    <Input type="password" name="renew_password" id="renew_password"
                                          value="" autocomplete="off" placeholder="Input new password"></Input>
                                 </FormGroup>
                             </FormGroup>
@@ -69,56 +68,6 @@ export default function ProfilePage() {
             </Row>
         </Container>
         </div>                                    
-
-    //                     <div class="form-group">
-    //                         <div class="input-wrap margin">
-    //                             <label class="checkbox">
-    //                                 <input type="checkbox" id="is_change_pass" name="is_change_pass" value="checked">
-    //                                 Change password?
-    //                             </label>
-    //                         </div>
-    //                     </div>
-    //                     <div class="password-group">
-    //                         <div class="form-group">
-    //                             <label class="control-label" for="old_password">Current password</label>
-    //                             <div class="input-wrap">
-    //                                 <input type="password" name="old_password" class="form-control" id="old_password"
-    //                                     value="" autocomplete="off" placeholder="Current password">
-    //                                 <span class="help-block"></span>
-    //                             </div>
-
-    //                         </div>
-
-    //                         <div class="form-group">
-    //                             <label class="control-label" for="new-password">New password</label>
-    //                             <div class="input-wrap">
-    //                                 <input type="password" name="new_password" class="form-control" id="new_password"
-    //                                     value="" autocomplete="off" placeholder="New password">
-    //                                 <span class="help-block"></span>
-    //                             </div>
-    //                         </div>
-
-    //                         <div class="form-group">
-    //                             <label class="control-label" for="re_new_password">Confirm new password</label>
-    //                             <div class="input-wrap">
-    //                                 <input type="password" name="re_new_password" class="form-control"
-    //                                     id="re_new_password" value="" autocomplete="off"
-    //                                     placeholder="Confirm new password">
-    //                                 <span class="help-block"></span>
-    //                             </div>
-    //                         </div>
-
-    //                     </div>
-    //                     <div class="form-group">
-    //                         <button type="submit" class="btn btn-primary btn-block btn-update">Save</button>
-    //                     </div>
-    //                 </form>
-    //             </div>
-    //         </div>
-    //     </div>
-    //     <div class="float-right"><a class="btn btn-danger" href="/account/signout">Sign out</a></div>
-    
-
 
     )
 }

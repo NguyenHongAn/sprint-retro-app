@@ -39,7 +39,7 @@ export default function SignIn() {
     }
     return (
         <Col md="9" lg="8" className="mx-auto">
-            <h3 class="login-heading mb-4">Welcome back!</h3>
+            <h3 className="login-heading mb-4">Welcome back!</h3>
             {
                 error === ""? null:
                 <Alert color="danger">
@@ -48,12 +48,12 @@ export default function SignIn() {
             }
             <Form onSubmit={(e) => login(e)}>
                 <FormGroup className="form-label-group">
-                    <Input type="text" id="inputUsernanme" className="form-control" onChange={handleUsernameChange}
+                    <Input type="text" id="inputUsernanme" onChange={handleUsernameChange}
                     placeholder="Username" required></Input>
                     <Label for="inputUsername">Username</Label>
                 </FormGroup>
                 <FormGroup className="form-label-group">
-                    <Input type="password" id="inputPassword" class="form-control" onChange={handlePasswordChange}
+                    <Input type="password" id="inputPassword" onChange={handlePasswordChange}
                      placeholder="Password" required></Input>
                     <Label for="inputPassword">Password</Label>
                 </FormGroup>

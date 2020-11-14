@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Col,Button, Form, FormGroup, Label, Input ,Alert} from "reactstrap";
-import {Link, Redirect} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 
@@ -10,7 +10,7 @@ export default function SignUp() {
 
     const [username, setUsername] = useState("");
     const [password, setpassword] = useState("");
-    const [redirect, setRedirect] = useState(false);
+    const history = useHistory();
     const [rePassword, setRePassword] = useState("");
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
@@ -59,17 +59,15 @@ export default function SignUp() {
         let response = await axiosRequest("POST","/auth/signup", newUser);
         if (response.status === 200)
         {
-            setRedirect(true);
+            history.push("/dashboard");
         }
         else{
             setError(response.message);
         }
     }
     return (
-        redirect?
-            <Redirect to="/auth/signin"></Redirect>
-            :(<Col md="9" lg="8" className="mx-auto">
-        <h3 class="login-heading mb-4">Register</h3>
+        <Col md="9" lg="8" className="mx-auto">
+        <h3 className="login-heading mb-4">Register</h3>
         {
             error === ""? null:
             <Alert color="danger">
@@ -78,23 +76,23 @@ export default function SignUp() {
         }
         <Form onSubmit={(e) => {registerNewAccount(e)}}>
             <FormGroup className="form-label-group">
-                <Input type="email" id="inputEmail" className="form-control" onChange={handleEmailChange}
+                <Input type="email" id="inputEmail"  onChange={handleEmailChange}
                 placeholder="Email address" required></Input>
                 <Label for="inputEmail">Email address</Label>
             </FormGroup>
             <FormGroup className="form-label-group">
-                <Input type="text" id="inputusername" className="form-control" onChange={handleUsernameChange} 
+                <Input type="text" id="inputusername" onChange={handleUsernameChange} 
                 placeholder="Username" required ></Input>
                 <Label for="inputEmail">Username</Label>
             </FormGroup>
             <hr/>
             <FormGroup className="form-label-group">
-                <Input type="password" id="inputPassword" class="form-control" onChange={handlePasswordChange} 
+                <Input type="password" id="inputPassword" onChange={handlePasswordChange} 
                 placeholder="Password" required></Input>
                 <Label for="inputPassword">Password</Label>
             </FormGroup>
             <FormGroup className="form-label-group">
-                <Input type="password" id="reInputPassword" class="form-control" onChange={handleRePasswordChange} 
+                <Input type="password" id="reInputPassword" onChange={handleRePasswordChange} 
                 placeholder="Re Password" required></Input>
                 <Label for="reInputPassword">Re Password</Label>
             </FormGroup>
@@ -114,7 +112,6 @@ export default function SignUp() {
                  <span> Facebook sign up</span>
             </Button>
         </Form>
-    </Col>)
-    
+    </Col>
     )
 }

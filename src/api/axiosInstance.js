@@ -11,6 +11,12 @@ const axiosInstance = axios.create({
     }
   });
 
+  // axiosInstance.interceptors.request.use((config) => {
+  //   // ..Handle token
+  //   const token = localStorage.getItem("jwt-token");
+  //   if (token) config.headers.Authorization = `Bearer ${token}`;
+  //   return config;
+  // });
 
 module.exports =  axiosInstance;
 
