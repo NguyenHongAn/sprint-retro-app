@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Modal,ModalHeader, ModalBody ,Form, FormGroup, Label, Input, Button} from 'reactstrap';
 
-export default function CreateCardModal({modal,toggle, addNewBoard}) {
+export default function CreateBoardModal({modal,toggle, addNewBoard}) {
 
     const [boardName, setBoardName] = useState("");
     
@@ -11,8 +11,6 @@ export default function CreateCardModal({modal,toggle, addNewBoard}) {
         e.preventDefault();
             let board = {
                 title: boardName,
-                //need to change change
-                userId: localStorage.getItem('jwt-token') || "5f9ae7216a959b00f478b1a8",
                 isActive: true,
             }
             addNewBoard(board);

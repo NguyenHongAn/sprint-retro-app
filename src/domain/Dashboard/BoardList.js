@@ -6,24 +6,27 @@ import {Button} from 'reactstrap';
 
 import './dashboard.css';
 import './boardList.css';
-import CreateCardModal from './CreateCardModal';
+import CreateBoardModal from './CreateBoardModal';
 import axiosRequest from '../../api/axiosRequest';
-
+import ShareLinkModal from './ShareLinkModal';
 export default function BoardList() {
 
     const [boardList, setBoardList] = useState([]);
-    const [isOpen, setisOpen] = useState(false);
+    const [isOpenAdd, setisOpenAdd] = useState(false);
+    const [isOpenShare, setisOpenShare] = useState(false);
     const [sprint, setSprint] = useState("");
     const history = useHistory();
+    const [shareLink, setShareLink] = useState("");
 
-    const toggle = () => setisOpen(!isOpen);
+    const handleOpenAddModal = () => setisOpenAdd(!isOpenAdd);
 
+    const handleOpenShareModal = () => setisOpenShare(!isOpenShare);
     useEffect(()=>{
         async function fetchData(){
           try
           {
-            let response = await axiosRequest("GET", "/dashboard");
-            let data= response.data;
+            const response = await axiosRequest("GET", "/dashboard");
+            let data = response.data;
             if (response.status=== 200)
             {
               data = data.boards.map(sprint =>{
@@ -37,7 +40,15 @@ export default function BoardList() {
             }
           }
           catch(error) {
-            history.push('/error');
+            if (error.response.status >= 400 && error.response.status < 500)
+            {
+                history.push("/auth/signin");
+                localStorage.removeItem("jwt-token");
+            }
+            else{
+                alert(error);
+            }
+            
         }
         }
         fetchData();
@@ -53,18 +64,26 @@ export default function BoardList() {
     }
 
     // DELETE board ====================================================
-    const deleteBoard = async (boardId) =>{
+    const deleteBoard = async (deletedboard) =>{
         try {
-            const result = await axiosRequest("DELETE", "/dashboard", boardId);
-
+            const result = await axiosRequest("DELETE", "/dashboard", deletedboard);
+            console.log({deletedboard});
             if(result.status === 200)
             {
                 console.log(result);
-                const newBoardList = boardList.filter(board => board._id !== boardId);
+                const newBoardList = boardList.filter(board => board._id !== deletedboard._id);
                 setBoardList(newBoardList);
             }
         } catch (error) {
-            history.push("/error");
+            if (error.response.status >= 400 && error.response.status < 500)
+            {
+                history.push("/auth/signin");
+                localStorage.removeItem("jwt-token");
+            }
+            else{
+                alert(error);
+            }
+            
         }
     }
 
@@ -80,23 +99,41 @@ export default function BoardList() {
                 let formatted_date =  d.getDate() + '/' + (d.getMonth() + 1) +'/'+ d.getFullYear();
                     
                 board.createTime = formatted_date; 
-                board.columns.length = 0;
                 boardList.push(board);
                 const newBoardList = Array.from(boardList);
                 setBoardList(newBoardList);
             }
 
         } catch (error) {
-            alert(error);
+            if (error.response.status >= 400 && error.response.status < 500)
+            {
+                history.push("/auth/signin");
+                localStorage.removeItem("jwt-token");
+            }
+            else
+            {
+                alert(error);
+            }
+            
         }
+    }
+
+    //SHARE board link ===========================================================
+    const shareBoardLink = (board) =>{
+        const webLink = process.env.REACT_APP_ENV === 'develop'? process.env.REACT_APP_DEV_SITE :process.env.REACT_APP_PRODUCT_SITE;
+        setShareLink(`${webLink}/dashboard/${board._id}`);
+        handleOpenShareModal();
     }
 
     return (
         <div>
         {(<div>
-            <CreateCardModal modal={isOpen} toggle={toggle} addNewBoard={addNewBoard}></CreateCardModal>
+            <CreateBoardModal modal={isOpenAdd} toggle={handleOpenAddModal}
+             addNewBoard={addNewBoard}></CreateBoardModal>
+             <ShareLinkModal modal={isOpenShare} toggle={handleOpenShareModal}
+             link={shareLink}></ShareLinkModal>
             <ul>
-            <li className="dashboard-item add-item" onClick={toggle}>
+            <li className="dashboard-item add-item" onClick={handleOpenAddModal}>
                 <span className="add">
                 <FontAwesomeIcon icon={faPlusCircle} size="4x"/>
                 <small>Add board</small>
@@ -118,7 +155,8 @@ export default function BoardList() {
                                 </div>
                                 </div>
                                 <div className="board-actions">
-                                    <Button className="text-decoration-none" color="link">
+                                    <Button className="text-decoration-none" color="link"
+                                     onClick={() => shareBoardLink(board)}>
                                         <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon>
                                          URL 
                                     </Button>
@@ -126,7 +164,7 @@ export default function BoardList() {
                                         <FontAwesomeIcon icon={faClone}></FontAwesomeIcon>
                                         Clone
                                     </Button>
-                                    <Button color="link" className="text-decoration-none" onClick={() =>{deleteBoard(board._id)}}>
+                                    <Button color="link" className="text-decoration-none" onClick={() =>{deleteBoard(board)}}>
                                         <FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
                                         Delete
                                     </Button>

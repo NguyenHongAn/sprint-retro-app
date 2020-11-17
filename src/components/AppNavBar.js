@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
 export default function AppNavBar() {
 
     const [isOpen, setIsOpen] = useState(false);
-    const isSignin = localStorage.getItem("jwt-token");
+    const [isSignin, setIsSignin] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const location = useLocation();
     const toggle = () => setIsOpen(!isOpen);
@@ -18,19 +18,28 @@ export default function AppNavBar() {
         fontFamily: 'thirsty_script_extrabold_deRg',
     }
 
+    const isTranparent = () =>{
+        console.log(location.pathname);
+        if (location.pathname.indexOf("auth") !== -1 )
+        {
+           return { backgroundColor: "transparent"};
+        }
+        return {backgroundColor: '#1e88e5'} 
+    }
+
     return (
     <div>
-        <Navbar style={location.pathname.indexOf("auth") !== -1 ? { backgroundColor: "transparent"}: {backgroundColor: '#1e88e5'} } 
+        <Navbar style={isTranparent()} 
         className="text-light" fixed="top" light expand="md">
             <NavbarBrand href="/" className="text-light" style={fontStyle}>Sprint Retro</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 
-                {isSignin?
+                {localStorage.getItem('jwt-token')?
                     <Nav className="ml-auto" navbar>
                         <NavItem active>
-                        <Dropdown isOpen={dropdownOpen} toggle={dropDown}>
-                            <DropdownToggle className="nav-link">
+                        <Dropdown isOpen={dropdownOpen} toggle={dropDown} >
+                            <DropdownToggle className="nav-link" style={{backgroundColor: "transparent"}}>
                                 <FontAwesomeIcon icon={faUserCircle} size="lg"></FontAwesomeIcon>
                             </DropdownToggle>
                             <DropdownMenu>

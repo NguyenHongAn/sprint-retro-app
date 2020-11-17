@@ -6,17 +6,20 @@ const axiosInstance = axios.create({
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE",
-        "Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept, Authorization",
+        "Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept,Authorization",
 
     }
   });
 
-  // axiosInstance.interceptors.request.use((config) => {
-  //   // ..Handle token
-  //   const token = localStorage.getItem("jwt-token");
-  //   if (token) config.headers.Authorization = `Bearer ${token}`;
-  //   return config;
-  // });
+  axiosInstance.interceptors.request.use((config) => {
+    //if token is exists, set header
+    const token = localStorage.getItem("jwt-token");
+    if (token)
+    {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  });
 
 module.exports =  axiosInstance;
 

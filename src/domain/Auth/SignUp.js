@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Col,Button, Form, FormGroup, Label, Input ,Alert} from "reactstrap";
 import {Link, useHistory} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -40,6 +40,9 @@ export default function SignUp() {
             {
                 setError("Password is not match!!!");
             }
+            // else if (password.length < 6){
+            //     setError("password must be at least 6 character");
+            // }
             else{
                 setError("");
             }
@@ -53,17 +56,28 @@ export default function SignUp() {
             email: email,
             username: username,
             password: password,
-            repassword:rePassword,
         }
+        try {
+            const response = await axiosRequest("POST","/auth/signup", newUser);
+            console.log(response.data);
+            if (response.status === 200 && !response.data.message)
+            {
+                history.push({
+                    pathname: "/auth/signin",
+                    state: {
+                        message: "sign up success !!",
+                        status: 200,
+                    }
+                });
+            }
+            else{
+                setError(response.data.message);
+            }
 
-        let response = await axiosRequest("POST","/auth/signup", newUser);
-        if (response.status === 200)
-        {
-            history.push("/dashboard");
+        } catch (error) {
+            alert(error);
         }
-        else{
-            setError(response.message);
-        }
+        
     }
     return (
         <Col md="9" lg="8" className="mx-auto">

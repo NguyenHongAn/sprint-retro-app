@@ -5,3 +5,8 @@
     border: solid 1px black;
     border-radius: 10px;
 }
+
+.profile-header
+{
+    margin-top: 60px;
+}

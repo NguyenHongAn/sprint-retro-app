@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useLocation} from "react-router-dom";
+import { useLocation, useHistory} from "react-router-dom";
 
 
 import './column.css';
@@ -12,6 +12,7 @@ import MESSAGE_COLUMNS from './ColumnTemplate';
 export default function ColumnsPage() {
 
     const location = useLocation();
+    const history = useHistory();
     const [board, setBoard] = useState({});
     const [messages,setMessages] = useState({
         0: [],
@@ -48,12 +49,20 @@ export default function ColumnsPage() {
             }
 
             } catch (error) {
-            
-                alert("can not get data from server");
+               
+                if (error.response.status >= 400 && error.response.status < 500)
+                {
+                    history.push("/auth/signin");
+                    localStorage.removeItem("jwt-token");
+                }
+                else{
+                    alert("can not get data from server");
+                }
+                
             }
         }
         fetchData();
-    },[location.pathname]);
+    },[location.pathname, history]);
 
     // CHANGE board name ==================================================================
     const changeBoardName= async (changedBoard) =>{
@@ -67,7 +76,14 @@ export default function ColumnsPage() {
             }
             
         } catch (error) {
-            alert("can not change board name");
+            if (error.response.status >= 400 && error.response.status < 500)
+            {
+                history.push("/auth/signin");
+                localStorage.removeItem("jwt-token");
+            }
+            else{
+                alert("can not change board name");
+            }
         }
     }
 
@@ -89,8 +105,15 @@ export default function ColumnsPage() {
                 
             }
         } catch (error) {
-            //error handle
+            if (error.response.status >= 400 && error.response.status < 500)
+            {
+                history.push("/auth/signin");
+                localStorage.removeItem("jwt-token");
+            }
+            else{
+                //error handle
             alert("can not add new message");
+            }
         }
     }
 
@@ -98,6 +121,7 @@ export default function ColumnsPage() {
     const deleteMessage = async (messageID, type) =>{
         try {
             //B1: delete message with DELETE method
+            console.log(location.pathname);
             const response = await axiosRequest("DELETE", `${location.pathname}/${messageID}`, messageID);
             
             if (response.status === 200)
@@ -111,8 +135,16 @@ export default function ColumnsPage() {
                 setMessages(newMessages);
             }
         } catch (error) {
-             //error handle
-             alert("can not delete message");
+            if (error.response.status >= 400 && error.response.status < 500)
+            {
+                history.push("/auth/signin");
+                localStorage.Item("jwt-token");
+            }
+             else
+             {
+                 //error handle
+             alert(error);
+             }
         }
     }
 
@@ -142,6 +174,15 @@ export default function ColumnsPage() {
             
             
         } catch (error) {
+            if (error.response.status >= 400 && error.response.status < 500)
+            {
+                history.push("/auth/signin");
+                localStorage.removeItem("jwt-token");
+            }
+            else{
+                alert("can not edit message");
+            }
+            //error handle
             
         }
     }

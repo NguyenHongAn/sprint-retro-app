@@ -1,56 +1,89 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Col,Button, Form, FormGroup, Label, Input, Alert} from "reactstrap";
-import {Link} from "react-router-dom";
+import {Link, useLocation, useHistory} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import axiosRequest from '../../api/axiosRequest';
 
 export default function SignIn() {
 
-    const [usename, setUsername] = useState("");
+    const location = useLocation();
+    const history = useHistory();
+
+    const [email, setEmail] = useState("");
     const [password, setpassword] = useState("");
-    const [error, setError] = useState("");
+    const [notice, setNotice] = useState(location.state ? location.state : {
+        message: "",
+        status: 404
+    });
+    
 
     const login = async (e) =>{
         e.preventDefault();
 
-        let user = {
-            usename: usename,
+        const user = {
+            email: email,
             password: password,
         };
+        try {
+            const response= await axiosRequest("POST", "/auth/signin",user);
+            const data = response.data;
+
+            if (typeof data.token !== "undefined")
+            {
+                 //Store token 
+                localStorage.setItem("jwt-token", data.token);
+                 history.push("/dashboard");
+                
+            }
+            else if (typeof data.message !== "undefined")
+            {
+                setNotice({
+                    message: data.message,
+                    status: 404 
+                });
+            }
+          
+        } catch (error) {
+            
+        }
         
-        let response= await axiosRequest("POST", "/auth/signin",user)
-        if (response.status === 200)
-       {
-            console.log(response.data);
-       }
-       else{
-           setError(response.message);
-       }
     }
-    const handleUsernameChange = (e) =>
+    const handleEmailChange = (e) =>
     {
-        setUsername(e.target.value);
+        setEmail(e.target.value);
     }
 
     const handlePasswordChange = (e) =>
     {
         setpassword(e.target.value);
     }
+
+    const isNewAccount = () =>{
+        console.log(notice);
+        if (notice.status === 200)
+        {
+            return (<Alert color="primary">
+                {notice.message}
+            </Alert>)
+        }
+        else if (notice.message !== "")
+        {
+            return (<Alert color="danger">
+                    {notice.message}
+                </Alert>)
+        }
+    }
+
     return (
         <Col md="9" lg="8" className="mx-auto">
             <h3 className="login-heading mb-4">Welcome back!</h3>
-            {
-                error === ""? null:
-                <Alert color="danger">
-                    {error}
-                </Alert>
-            }
+            { isNewAccount() }
             <Form onSubmit={(e) => login(e)}>
                 <FormGroup className="form-label-group">
-                    <Input type="text" id="inputUsernanme" onChange={handleUsernameChange}
-                    placeholder="Username" required></Input>
-                    <Label for="inputUsername">Username</Label>
+                    <Input type="email" id="inputEmail" onChange={handleEmailChange}
+                    placeholder="Email" required></Input>
+                    <Label for="inputEmail">Email</Label>
                 </FormGroup>
                 <FormGroup className="form-label-group">
                     <Input type="password" id="inputPassword" onChange={handlePasswordChange}

@@ -92,7 +92,7 @@ export default function Column({column,
             messages.map(message =>{
                 if (msgIdEdited === message._id)
                 {                  
-                    return <li className="message" style={column.style}>
+                    return <li className="message" style={column.style} key={message._id}>
                         <EditMessageCard 
                         message={message}
                         handleEditMsg={handleEditMsg} 
@@ -103,7 +103,7 @@ export default function Column({column,
                 }
                 else{
                     return (
-                        <li className="message" style={column.style}>
+                        <li className="message" style={column.style} key={message._id}>
                             <MessageCard message={message} 
                             openEdit={openEditFormForMessage} 
                             deleteMessage={deleteMessage}>  

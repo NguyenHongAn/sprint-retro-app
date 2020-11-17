@@ -1,15 +1,13 @@
 import React, { useState} from 'react';
 import {Button, Form, Row, Col, Label, Input} from 'reactstrap';
-import {Link, useLocation} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit} from '@fortawesome/free-solid-svg-icons';
 
-import axiosRequest from '../../../api/axiosRequest';
 import './card.css';
 
 export default function ChangeBoardName({board, changeBoardName}) {
 
-    const location = useLocation();
 
     const handleBoardNameChange = (e) => {
         setTitle(e.target.value);
