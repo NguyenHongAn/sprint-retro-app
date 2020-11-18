@@ -29,18 +29,19 @@ export default function AppNavBar() {
 
     const signOut = ()=>{
         localStorage.removeItem("jwt-token");
-        history.push('/auth/signin');
+        history.push('/');
     }
 
     const signOutBtn = {
         border: "none",
         backgroundColor: "white",
+        padding: '0px',
     }
     return (
     <div>
         <Navbar style={isTranparent()} 
         className="text-light" fixed="top" light expand="md">
-            <NavbarBrand href="/" className="text-light" style={fontStyle}>Sprint Retro</NavbarBrand>
+            <NavbarBrand href="#/" className="text-light" style={fontStyle}>Sprint Retro</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 

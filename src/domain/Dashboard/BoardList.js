@@ -159,11 +159,7 @@ export default function BoardList() {
                                      onClick={() => shareBoardLink(board)}>
                                         <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon>
                                          URL 
-                                    </Button>
-                                    <Button className="text-decoration-none" color="link">
-                                        <FontAwesomeIcon icon={faClone}></FontAwesomeIcon>
-                                        Clone
-                                    </Button>
+                                    </Button>                                    
                                     <Button color="link" className="text-decoration-none" onClick={() =>{deleteBoard(board)}}>
                                         <FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon>
                                         Delete

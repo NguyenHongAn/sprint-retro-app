@@ -4,7 +4,7 @@ import {Container} from "reactstrap";
 import bg from './background.png';
 import {Link} from 'react-router-dom';
 
-export default function HomePage() {
+function HomePage() {
    
     return (
         <div>
@@ -14,7 +14,7 @@ export default function HomePage() {
                 <Container className="heading">
                     Improve with Sprint Retrospectives 
                 <p className="lead">This is a description for the first slide.</p>
-                <Link className="btn-start" to="#/auth/signup"> Get Started for Free </Link>
+                <Link className="btn-start" to={`/auth/signup`}> Get Started for Free </Link>
                 </Container>
                 
                 </div>
@@ -22,3 +22,5 @@ export default function HomePage() {
         </div>
     )
 }
+
+export default HomePage;
