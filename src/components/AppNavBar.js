@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Navbar,NavItem,NavLink,Collapse,NavbarBrand,Nav, NavbarToggler,Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation, useHistory, withRouter } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 
 
 export default function AppNavBar() {
@@ -53,13 +53,13 @@ export default function AppNavBar() {
                             </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem>
-                                    <Link to="/profile" className="text-decoration-none"> Profile</Link>
+                                    <Link to="#/profile" className="text-decoration-none"> Profile</Link>
                                 </DropdownItem>
                                 <DropdownItem>
                                     <button onClick={signOut} className="btn-link" style={signOutBtn}>Sign Out</button>
                                 </DropdownItem>
                                 <DropdownItem>
-                                    <Link to="/dashboard" className="text-decoration-none"> Dashboard</Link>
+                                    <Link to="#/dashboard" className="text-decoration-none"> Dashboard</Link>
                                 </DropdownItem>
                             </DropdownMenu>        
                             </Dropdown>
@@ -67,10 +67,10 @@ export default function AppNavBar() {
                     </Nav>
                     :<Nav className="ml-auto" navbar>
                     <NavItem active>
-                        <NavLink className="text-light" href="/auth/signin">Sign In</NavLink>
+                        <NavLink className="text-light" href="#/auth/signin">Sign In</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink className="text-light" href="/auth/signup">Sign Up</NavLink>
+                        <NavLink className="text-light" href="#/auth/signup">Sign Up</NavLink>
                     </NavItem>
                 </Nav>}
                 

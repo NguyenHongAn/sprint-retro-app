@@ -139,7 +139,7 @@ export default function SignIn() {
                         <Link to="#">Forgot password?</Link>
                     </div>
                     <div className="text-center">
-                        <Link to="/auth/signup">Sign up</Link>
+                        <Link to="#/auth/signup">Sign up</Link>
                     </div>
                 <hr/>
                 <FormGroup>

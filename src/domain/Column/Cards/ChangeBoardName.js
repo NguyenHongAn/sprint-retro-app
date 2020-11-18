@@ -31,7 +31,7 @@ export default function ChangeBoardName({board, changeBoardName}) {
 
     return (
         <div>
-            <Link type="button"  className="go-back-link" to="/dashboard">/Dashboard</Link>
+            <Link type="button"  className="go-back-link" to="#/dashboard">/Dashboard</Link>
            
            <Row className="change-board-name-text">
            {isOpen?

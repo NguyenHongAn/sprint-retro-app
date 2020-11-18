@@ -179,7 +179,7 @@ export default function ProfilePage() {
                         }
                         <FormGroup>
                             <Button color="primary" size="lg" outline type="submit">Save</Button>
-                            <Link to="/dashboard"></Link>
+                            <Link to="#/dashboard"></Link>
                         </FormGroup>
                     </Form>
                 </Col>
