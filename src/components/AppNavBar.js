@@ -54,13 +54,13 @@ export default function AppNavBar() {
                             </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem>
-                                    <Link to="#/profile" className="text-decoration-none"> Profile</Link>
+                                    <Link to="/profile" className="text-decoration-none"> Profile</Link>
                                 </DropdownItem>
                                 <DropdownItem>
                                     <button onClick={signOut} className="btn-link" style={signOutBtn}>Sign Out</button>
                                 </DropdownItem>
                                 <DropdownItem>
-                                    <Link to="#/dashboard" className="text-decoration-none"> Dashboard</Link>
+                                    <Link to="/dashboard" className="text-decoration-none"> Dashboard</Link>
                                 </DropdownItem>
                             </DropdownMenu>        
                             </Dropdown>

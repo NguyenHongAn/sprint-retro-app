@@ -16,9 +16,9 @@ function App() {
     <Router basename="/">
     <AppNavBar></AppNavBar>
       <Switch>
-        <Route path="/sprint-retro-app">
+        {/* <Route path="/sprint-retro-app">
           <Redirect to="/"></Redirect>
-        </Route>
+        </Route> */}
         <Route path="/auth/signin">
           <UserPage option="signin"></UserPage>
         </Route>

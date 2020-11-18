@@ -39,9 +39,9 @@ export default function SignUp() {
             {
                 setError("Password is not match!!!");
             }
-            // else if (password.length < 6){
-            //     setError("password must be at least 6 character");
-            // }
+            else if (password.length < 5){
+                setError("password must be at least 6 character");
+            }
             else{
                 setError("");
             }
@@ -113,7 +113,7 @@ export default function SignUp() {
                 <Button type="submit" color="primary" size="lg" block
                 className="btn-login text-uppercase font-weight-bold mb-2"> Sign Up</Button>   
                 <div className="text-center">
-                    <Link to="#/auth/signin">Sign In</Link>
+                    <Link to="/auth/signin">Sign In</Link>
                 </div>
             <hr/>
         </Form>

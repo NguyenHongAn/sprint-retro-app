@@ -60,7 +60,15 @@ export default function ProfilePage() {
     },[history]);
 
 
-    const changePassword = () => setChangePass(!changePass);
+    const changePassword = () => {
+        if(typeof currentUserInfo.facebookProvider === "undefined" &&typeof currentUserInfo.googleProvider === "undefined")
+        {
+            setChangePass(!changePass);
+        }
+        else{
+            setNotice("Can not change password");
+        }
+    };
 
     //  CHANGE user's infomation using POST method ===========================================
     const changeUSerInfo =async (e) =>{
@@ -102,7 +110,7 @@ export default function ProfilePage() {
                     localStorage.removeItem("jwt-token");
                     localStorage.setItem("jwt-token", data.token);
                     console.log(data.token);
-                    setNotice("");
+                    setNotice("Change user infomation success");
                 }
                 if(typeof data.message !== "undefined")
                 {
@@ -179,7 +187,7 @@ export default function ProfilePage() {
                         }
                         <FormGroup>
                             <Button color="primary" size="lg" outline type="submit">Save</Button>
-                            <Link to="#/dashboard"></Link>
+                            <Link to="/dashboard"></Link>
                         </FormGroup>
                     </Form>
                 </Col>

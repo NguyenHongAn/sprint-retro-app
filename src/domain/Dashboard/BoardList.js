@@ -120,8 +120,8 @@ export default function BoardList() {
 
     //SHARE board link ===========================================================
     const shareBoardLink = (board) =>{
-        const webLink = process.env.REACT_APP_ENV === 'develop'? process.env.REACT_APP_DEV_SITE :process.env.REACT_APP_PRODUCT_SITE;
-        setShareLink(`${webLink}/dashboard/${board._id}`);
+        const webLink = process.env.REACT_APP_ENV === 'develop'? process.env.REACT_APP_CLIENT :process.env.REACT_APP_PRODUCT;
+        setShareLink(`${webLink}/#/dashboard/${board._id}`);
         handleOpenShareModal();
     }
 
