@@ -19,10 +19,13 @@
   }
   
   .btn-login {
-    font-size: 0.9rem;
     letter-spacing: 0.05rem;
-    padding: 0.75rem 1rem;
     border-radius: 2rem!important;
+    margin-bottom: 5px ;
+    border: none; 
+    justify-content: center;
+    align-items: center;
+    display: flex;
   }
   
   .form-label-group {
@@ -110,13 +113,3 @@
       color: #777;
     }
   }
-
-  /* .btn-google {
-    color: white;
-    background-color: #ea4335;
-  }
-  
-  .btn-facebook {
-    color: white;
-    background-color: #3b5998;
-  } */

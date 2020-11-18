@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {Col,Button, Form, FormGroup, Label, Input ,Alert} from "reactstrap";
 import {Link, useHistory} from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 
 import axiosRequest from '../../api/axiosRequest';
+import './user.css';
 
 export default function SignUp() {
 
@@ -117,14 +116,6 @@ export default function SignUp() {
                     <Link to="/auth/signin">Sign In</Link>
                 </div>
             <hr/>
-            <Button type="submit" color="danger" size="lg" block className="btn-login text-uppercase mr-2">
-                <FontAwesomeIcon icon={faGoogle}> </FontAwesomeIcon>
-                <span>Google sign up</span> 
-            </Button>
-            <Button type="submit" color="primary" size="lg" block className="btn-login text-uppercase mr-2">
-                <FontAwesomeIcon icon={faFacebook}> </FontAwesomeIcon>
-                 <span> Facebook sign up</span>
-            </Button>
         </Form>
     </Col>
     )

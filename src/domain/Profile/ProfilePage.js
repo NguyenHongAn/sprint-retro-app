@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Container, Row,Col, FormGroup,Form, Label, Input, Button, Alert} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import {useHistory} from "react-router-dom";
+import {useHistory, Link} from "react-router-dom";
 
 import './profile.css';
 import axiosRequest from '../../api/axiosRequest';
@@ -78,11 +78,13 @@ export default function ProfilePage() {
             }
             
         };
+        console.log(email);
         if (email !== currentUserInfo.email || username !== currentUserInfo.username || changePass)
         {
-        
-            if (email === currentUserInfo)
+            
+            if (email === currentUserInfo.email)
             {
+                
                 changedUser.isEmailChange = false;
             }
         //B2 : post to server to update info of user
@@ -99,7 +101,7 @@ export default function ProfilePage() {
 
                     localStorage.removeItem("jwt-token");
                     localStorage.setItem("jwt-token", data.token);
-
+                    console.log(data.token);
                     setNotice("");
                 }
                 if(typeof data.message !== "undefined")
@@ -177,6 +179,7 @@ export default function ProfilePage() {
                         }
                         <FormGroup>
                             <Button color="primary" size="lg" outline type="submit">Save</Button>
+                            <Link to="/dashboard"></Link>
                         </FormGroup>
                     </Form>
                 </Col>

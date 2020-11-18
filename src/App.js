@@ -13,7 +13,7 @@ import AppNavBar from './components/AppNavBar';
 function App() {
   return (
     
-    <Router>
+    <Router basename="/">
     <AppNavBar></AppNavBar>
       <Switch>
         <Route path="/sprint-retro-app">

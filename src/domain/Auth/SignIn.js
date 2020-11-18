@@ -1,22 +1,44 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Col,Button, Form, FormGroup, Label, Input, Alert} from "reactstrap";
 import {Link, useLocation, useHistory} from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
+
+import FacebookButton from './Buttons/FacebookButton';
+import GoogleButton from './Buttons/GoogleButton';
 import axiosRequest from '../../api/axiosRequest';
+import './user.css';
+import Cookies from 'js-cookie';
 
 export default function SignIn() {
 
     const location = useLocation();
     const history = useHistory();
-
+    const HOST_URL = process.env.REACT_APP_ENV === "develop"? process.env.REACT_APP_DEV_SITE: process.env.REACT_APP_PRODUCT_SITE;
     const [email, setEmail] = useState("");
     const [password, setpassword] = useState("");
     const [notice, setNotice] = useState(location.state ? location.state : {
         message: "",
         status: 404
     });
+    //let popup = null;
     
+    useEffect(() =>{
+        const localToken = localStorage.getItem("jwt-token");
+        if (localToken)
+        {
+            history.push("/dashboard");
+            return;
+        }
+
+        const socialToken = Cookies.get('jwt-token');
+        if (socialToken)
+        {
+            console.log(socialToken);
+            localStorage.setItem("jwt-token", socialToken);
+            Cookies.remove('jwt-token');
+            history.push("/dashboard");
+            return;
+        }
+    }, [history]);
 
     const login = async (e) =>{
         e.preventDefault();
@@ -49,6 +71,23 @@ export default function SignIn() {
         }
         
     }
+
+
+    const getResponse = (type) =>{
+        const width = 600, height = 600;
+        const left = (window.innerWidth / 2) - (width / 2);
+        const top = (window.innerHeight / 2) - (height / 2);
+        const url = `${HOST_URL}/auth/${type}`
+
+        return window.open(url, "_self",       
+          `toolbar=no, location=no, directories=no, status=no, menubar=no, 
+          scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
+          height=${height}, top=${top}, left=${left}`
+        );
+
+
+    }
+
     const handleEmailChange = (e) =>
     {
         setEmail(e.target.value);
@@ -60,18 +99,21 @@ export default function SignIn() {
     }
 
     const isNewAccount = () =>{
-        console.log(notice);
-        if (notice.status === 200)
+       
+        if (typeof notice !== "undefined")
         {
-            return (<Alert color="primary">
-                {notice.message}
-            </Alert>)
-        }
-        else if (notice.message !== "")
-        {
-            return (<Alert color="danger">
+            if (notice.status === 200)
+            {
+                return (<Alert color="primary">
                     {notice.message}
                 </Alert>)
+            }
+            else if (notice.message !== "")
+            {
+                return (<Alert color="danger">
+                        {notice.message}
+                    </Alert>)
+            }
         }
     }
 
@@ -100,14 +142,13 @@ export default function SignIn() {
                         <Link to="/auth/signup">Sign up</Link>
                     </div>
                 <hr/>
-                <Button type="submit" color="danger" size="lg" block className="btn-login text-uppercase mr-2">
-                    <FontAwesomeIcon icon={faGoogle}> </FontAwesomeIcon>
-                    <span>Google sign in</span> 
-                </Button>
-                <Button type="submit" color="primary" size="lg" block className="btn-login text-uppercase mr-2">
-                    <FontAwesomeIcon icon={faFacebook}> </FontAwesomeIcon>
-                     <span> Facebook sign in</span>
-                </Button>
+                <FormGroup>
+                    <FacebookButton getResponseFacebook={getResponse} ></FacebookButton>
+                    <GoogleButton 
+                    getResponseGoogle={getResponse}
+                    ></GoogleButton>
+                </FormGroup>
+                
             </Form>
         </Col>
     )

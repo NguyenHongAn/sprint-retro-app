@@ -2,15 +2,15 @@ import React, {useState} from 'react'
 import {Navbar,NavItem,NavLink,Collapse,NavbarBrand,Nav, NavbarToggler,Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory, withRouter } from 'react-router-dom';
 
 
 export default function AppNavBar() {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [isSignin, setIsSignin] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const location = useLocation();
+    const history= useHistory();
     const toggle = () => setIsOpen(!isOpen);
     const dropDown = () => setDropdownOpen(!dropdownOpen);
 
@@ -27,6 +27,15 @@ export default function AppNavBar() {
         return {backgroundColor: '#1e88e5'} 
     }
 
+    const signOut = ()=>{
+        localStorage.removeItem("jwt-token");
+        history.push('/auth/signin');
+    }
+
+    const signOutBtn = {
+        border: "none",
+        backgroundColor: "white",
+    }
     return (
     <div>
         <Navbar style={isTranparent()} 
@@ -47,7 +56,10 @@ export default function AppNavBar() {
                                     <Link to="/profile" className="text-decoration-none"> Profile</Link>
                                 </DropdownItem>
                                 <DropdownItem>
-                                    <Link to="/auth/signout" className="text-decoration-none"> Sign Out</Link>
+                                    <button onClick={signOut} className="btn-link" style={signOutBtn}>Sign Out</button>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <Link to="/dashboard" className="text-decoration-none"> Dashboard</Link>
                                 </DropdownItem>
                             </DropdownMenu>        
                             </Dropdown>
