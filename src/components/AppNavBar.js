@@ -34,14 +34,14 @@ export default function AppNavBar() {
 
     const signOutBtn = {
         border: "none",
-        backgroundColor: "white",
+        backgroundColor: "transparent",
         padding: '0px',
     }
     return (
     <div>
         <Navbar style={isTranparent()} 
         className="text-light" fixed="top" light expand="md">
-            <NavbarBrand href="#/" className="text-light" style={fontStyle}>Sprint Retro</NavbarBrand>
+            <NavbarBrand href="/" className="text-light" style={fontStyle}>Sprint Retro</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 
@@ -68,10 +68,10 @@ export default function AppNavBar() {
                     </Nav>
                     :<Nav className="ml-auto" navbar>
                     <NavItem active>
-                        <NavLink className="text-light" href="#/auth/signin">Sign In</NavLink>
+                        <Link className="text-light nav-link" to="/auth/signin">Sign In</Link>
                     </NavItem>
-                    <NavItem>
-                        <NavLink className="text-light" href="#/auth/signup">Sign Up</NavLink>
+                    <NavItem active>
+                        <Link className="text-light nav-link" to="/auth/signup">Sign Up</Link>
                     </NavItem>
                 </Nav>}
                 

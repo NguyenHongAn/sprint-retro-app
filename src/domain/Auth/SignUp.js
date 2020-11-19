@@ -39,7 +39,7 @@ export default function SignUp() {
             {
                 setError("Password is not match!!!");
             }
-            else if (password.length < 5){
+            else if (password.length < 6){
                 setError("password must be at least 6 character");
             }
             else{

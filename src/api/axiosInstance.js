@@ -1,7 +1,8 @@
 const axios = require('axios');
-
+const baseURL = process.env.REACT_APP_ENV === "develop"? process.env.REACT_APP_DEV_SITE: process.env.REACT_APP_PRODUCT_SITE;
+console.log(baseURL);
 const axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_ENV === "develop"? process.env.REACT_APP_DEV_SITE: process.env.REACT_APP_PRODUCT_SITE,
+    baseURL: baseURL,
     timeout: 10000,
     headers: {
         "Access-Control-Allow-Origin": "*",

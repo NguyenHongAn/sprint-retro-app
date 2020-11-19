@@ -13,12 +13,12 @@ import AppNavBar from './components/AppNavBar';
 function App() {
   return (
     
-    <Router basename="/">
+    <Router basename="/sprint-retro-app">
     <AppNavBar></AppNavBar>
       <Switch>
-        {/* <Route path="/sprint-retro-app">
+        <Route path="/sprint-retro-app">
           <Redirect to="/"></Redirect>
-        </Route> */}
+        </Route>
         <Route path="/auth/signin">
           <UserPage option="signin"></UserPage>
         </Route>
