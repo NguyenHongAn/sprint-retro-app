@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/sprint-retro-app/static/css/main.5d09536d.chunk.css",
-    "main.js": "/sprint-retro-app/static/js/main.58b35386.chunk.js",
-    "main.js.map": "/sprint-retro-app/static/js/main.58b35386.chunk.js.map",
+    "main.js": "/sprint-retro-app/static/js/main.f58f626f.chunk.js",
+    "main.js.map": "/sprint-retro-app/static/js/main.f58f626f.chunk.js.map",
     "runtime-main.js": "/sprint-retro-app/static/js/runtime-main.725eabfb.js",
     "runtime-main.js.map": "/sprint-retro-app/static/js/runtime-main.725eabfb.js.map",
     "static/css/2.20aa2d7b.chunk.css": "/sprint-retro-app/static/css/2.20aa2d7b.chunk.css",
@@ -22,6 +22,6 @@
     "static/css/2.20aa2d7b.chunk.css",
     "static/js/2.65a6c3f5.chunk.js",
     "static/css/main.5d09536d.chunk.css",
-    "static/js/main.58b35386.chunk.js"
+    "static/js/main.f58f626f.chunk.js"
   ]
 }
